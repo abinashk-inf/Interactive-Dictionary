@@ -6,15 +6,20 @@ import difflib
 global data_file
 
 def definition(word):
-    word=word.lower()
     if word in data_file:
-        print(data_file[word])
-    else:
-        
-        related=difflib.get_close_matches(word,data_file.keys(),n=4,cutoff=0.6)
+        content=data_file[word]
+        for meanings in content:
+            print(meanings)
+    elif word.lower() in data_file:
+        content=data_file[word.lower()]
+        for meanings in content:
+            print(meanings)
+    else:       
+        related=difflib.get_close_matches(word,data_file.keys(),3,0.7)
         if len(related) > 0:
             print("The Entry did not match any word. Are you loooking for any of these?")
-            print(related)
+            for r in related:
+                print(r)
         else:
             print("Word not found")
 
